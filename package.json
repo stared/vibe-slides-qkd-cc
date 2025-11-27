@@ -1,0 +1,19 @@
+{
+  "name": "nano-slides-cc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "slidev",
+    "build": "slidev build",
+    "export": "slidev export"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.19.0",
+  "devDependencies": {
+    "@slidev/cli": "^52.9.1",
+    "@slidev/theme-default": "^0.25.0"
+  }
+}

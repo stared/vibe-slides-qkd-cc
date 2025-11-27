@@ -1,0 +1,84 @@
+/* Anime-inspired theme for DIQKD slides */
+
+:root {
+  --slidev-theme-primary: #FF6B9D;
+  --slidev-theme-secondary: #9B6DFF;
+  --slidev-theme-accent: #00D4FF;
+}
+
+/* Gradient backgrounds inspired by anime aesthetics */
+.slidev-layout {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+}
+
+/* Anime-style headings with glow effect */
+h1 {
+  background: linear-gradient(90deg, #FF6B9D, #9B6DFF, #00D4FF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(155, 109, 255, 0.5);
+}
+
+h2 {
+  color: #FF6B9D;
+}
+
+/* Softer text for readability */
+p, li {
+  color: #E8E8E8;
+}
+
+/* Kawaii-style boxes */
+.slidev-layout .bg-blue-500\/20,
+.slidev-layout .bg-purple-500\/20,
+.slidev-layout .bg-pink-500\/20,
+.slidev-layout .bg-green-500\/20 {
+  border: 2px solid currentColor;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(155, 109, 255, 0.3);
+}
+
+/* Anime-style code blocks */
+.slidev-code {
+  border-radius: 12px;
+  border: 1px solid #9B6DFF;
+  box-shadow: 0 0 15px rgba(155, 109, 255, 0.2);
+}
+
+/* Table styling */
+table {
+  border-collapse: collapse;
+}
+
+th {
+  background: linear-gradient(90deg, #FF6B9D33, #9B6DFF33);
+  color: #FF6B9D;
+}
+
+td, th {
+  border: 1px solid #9B6DFF44;
+  padding: 8px 16px;
+}
+
+/* Mermaid diagram styling */
+.mermaid {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+/* Transition effects */
+.slidev-page {
+  transition: all 0.5s ease;
+}
+
+/* Click animations */
+.slidev-vclick-target {
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.slidev-vclick-hidden {
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+}
