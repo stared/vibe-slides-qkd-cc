@@ -13,6 +13,12 @@ transition: slide-left
 mdc: true
 ---
 
+<div class="absolute inset-0">
+  <img src="/images/title.png" class="w-full h-full object-cover opacity-40" />
+</div>
+
+<div class="relative z-10">
+
 # Device Independent Quantum Key Distribution
 
 ## Securing Communication Without Trusting Your Devices
@@ -23,10 +29,7 @@ mdc: true
   </span>
 </div>
 
-<!--
-NANO BANANA PRO PROMPT:
-"Anime style illustration of two characters, Alice and Bob, exchanging a glowing quantum key through a futuristic city skyline at night. Cyberpunk aesthetic with neon pink and blue colors. Studio Ghibli meets Ghost in the Shell. The key appears as a shimmering stream of photons between them."
--->
+</div>
 
 ---
 layout: image-right
@@ -44,17 +47,12 @@ image: /images/quantum-lock.png
 
 </v-clicks>
 
-<!--
-NANO BANANA PRO PROMPT:
-"Anime style digital padlock floating in cyberspace, surrounded by flowing data streams and binary code. Soft glowing blue and purple colors. Clean, minimalist Japanese illustration style."
--->
-
+---
+layout: image-right
+image: /images/quantum-threat.png
 ---
 
 # The Problem with Classical Cryptography
-
-<div class="grid grid-cols-2 gap-4">
-<div>
 
 ## Today's Security
 
@@ -62,84 +60,60 @@ NANO BANANA PRO PROMPT:
 - RSA: Hard to factor large numbers
 - Works... for now
 
-</div>
-<div>
-
 ## The Quantum Threat
 
 - Quantum computers can break RSA
 - Shor's algorithm: Exponential speedup
 - "Harvest now, decrypt later"
 
-</div>
-</div>
-
-<!--
-NANO BANANA PRO PROMPT:
-"Anime illustration split in two: Left side shows a confident character with a traditional padlock, right side shows an ominous quantum computer monster breaking through. Dramatic lighting, manga panel style composition."
--->
-
 ---
-layout: center
+layout: image-right
+image: /images/qkd-intro.png
 ---
 
-# Enter: Quantum Key Distribution (QKD)
+# Enter: Quantum Key Distribution
 
-<div class="text-6xl my-8">🔐 + ⚛️ = 💪</div>
+<div class="text-4xl my-4">🔐 + ⚛️ = 💪</div>
 
 Security based on **physics**, not math!
 
-<!--
-NANO BANANA PRO PROMPT:
-"Cute anime scientist character excitedly presenting a glowing quantum particle. The particle emits soft pink and blue light. Background shows elegant quantum wave functions. Kawaii style but scientifically themed."
--->
+<v-clicks>
+
+- Quantum mechanics guarantees security
+- Eavesdropping disturbs the quantum state
+- Any interception is detectable
+
+</v-clicks>
 
 ---
+layout: image-right
+image: /images/bb84-protocol.png
+---
 
-# How QKD Works: The BB84 Protocol
+# How QKD Works: BB84
 
-<div class="grid grid-cols-3 gap-2 text-center">
+<div class="text-sm">
 
-<div class="p-4 bg-blue-500/20 rounded">
-
-### Alice
-Prepares photons in random bases
-
-</div>
-
-<div class="p-4 bg-purple-500/20 rounded">
-
-### Quantum Channel
-Photons travel through fiber/air
-
-</div>
-
-<div class="p-4 bg-pink-500/20 rounded">
-
-### Bob
-Measures in random bases
-
-</div>
-
-</div>
-
-<div class="mt-8">
-
-| Alice's Basis | Alice's Bit | Bob's Basis | Bob's Result | Keep? |
-|--------------|-------------|-------------|--------------|-------|
+| Alice | Alice's Bit | Bob | Result | Keep? |
+|-------|-------------|-----|--------|-------|
 | ➕ | 0 | ➕ | 0 | ✅ |
 | ✖️ | 1 | ➕ | ? | ❌ |
 | ✖️ | 0 | ✖️ | 0 | ✅ |
 
 </div>
 
-<!--
-NANO BANANA PRO PROMPT:
-"Anime style Alice and Bob characters on opposite sides, connected by a stream of glowing photons. Alice has blue theme, Bob has pink theme. Show polarization symbols floating near photons. Clean infographic style with anime character design."
--->
+<v-clicks>
+
+- Alice sends polarized photons
+- Bob measures in random bases
+- They compare bases publicly
+- Keep only matching measurements
+
+</v-clicks>
 
 ---
-layout: two-cols
+layout: image-right
+image: /images/device-problem.png
 ---
 
 # But Wait... There's a Problem!
@@ -154,9 +128,7 @@ layout: two-cols
 
 </v-clicks>
 
-::right::
-
-<div class="ml-4">
+<div class="mt-4">
 
 ## Real Attacks Happened!
 
@@ -166,167 +138,147 @@ layout: two-cols
 
 </div>
 
-<!--
-NANO BANANA PRO PROMPT:
-"Dramatic anime scene of a suspicious-looking quantum device with a tiny cartoon devil inside it. The device appears normal on outside but x-ray view shows hidden malicious components. Dark thriller anime style."
--->
-
 ---
-layout: center
-class: text-center
+layout: image-right
+image: /images/diqkd-hero.png
 ---
 
 # Device Independent QKD
 
 ## Trust the physics, not the device!
 
-<div class="text-8xl my-8">🎰</div>
+<v-clicks>
 
-Based on **Bell inequality violations**
+- Treat devices as **black boxes**
+- Security from **Bell inequality**
+- Works even with adversarial devices!
 
-<!--
-NANO BANANA PRO PROMPT:
-"Triumphant anime hero character standing confidently with arms crossed, surrounded by floating quantum devices that appear as cute but untrustworthy robot characters. The hero is protected by a glowing shield labeled 'Bell'. Inspirational anime poster style."
--->
+</v-clicks>
+
+<div class="mt-4 p-2 bg-purple-500/20 rounded">
+
+The only assumption: quantum mechanics is correct
+
+</div>
 
 ---
+layout: image-right
+image: /images/bell-inequality.png
+---
 
-# Bell's Inequality: The Heart of DIQKD
+# Bell's Inequality
 
-<div class="text-center text-2xl my-8">
+<div class="text-xl my-4">
 
-$S = |E(a,b) - E(a,b') + E(a',b) + E(a',b')| \leq 2$
+$S = |E(a,b) - E(a,b') + E(a',b) + E(a',b')|$
 
 </div>
 
 <v-clicks>
 
-- Classical physics: S ≤ 2 (always!)
-- Quantum mechanics: S ≤ 2√2 ≈ 2.83
-- **If S > 2**: Genuine quantum correlations!
+- Classical physics: **S ≤ 2** (always!)
+- Quantum mechanics: **S ≤ 2√2 ≈ 2.83**
+- If **S > 2**: Genuine quantum correlations!
 
 </v-clicks>
 
-<div class="mt-8 p-4 bg-green-500/20 rounded">
+<div class="mt-4 p-2 bg-green-500/20 rounded text-sm">
 
-✨ **The Magic**: If Bell inequality is violated, the key MUST be secure - regardless of what's inside the devices!
+✨ If Bell inequality is violated → key is secure!
 
 </div>
 
-<!--
-NANO BANANA PRO PROMPT:
-"Educational anime infographic showing the Bell inequality. Two entangled particles as cute connected characters. Mathematical formula displayed elegantly. Show classical limit as a barrier being broken by quantum correlations. Bright, educational style like a science anime."
--->
-
+---
+layout: image-right
+image: /images/diqkd-protocol.png
 ---
 
-# DIQKD Protocol Overview
+# DIQKD Protocol
 
-```mermaid
-graph LR
-    A[Alice's Device] -->|Entangled Pairs| B[Bob's Device]
-    A --> C{Bell Test}
-    B --> C
-    C -->|S > 2| D[Secure Key!]
-    C -->|S ≤ 2| E[Abort!]
+<v-clicks>
+
+1. **Share** entangled photon pairs
+2. **Randomly choose**: Key generation OR Bell test
+3. **If Bell test passes** → Extract secure key
+4. **If Bell test fails** → Someone's cheating!
+
+</v-clicks>
+
+<div class="mt-4 text-sm">
+
+```mermaid {scale: 0.6}
+graph TD
+    A[Entangled Pairs] --> B{Bell Test}
+    B -->|S > 2| C[Secure Key!]
+    B -->|S ≤ 2| D[Abort!]
 ```
 
-<v-clicks>
-
-1. Share entangled photon pairs
-2. Randomly choose: Key generation OR Bell test
-3. If Bell test passes → Extract secure key
-4. If Bell test fails → Someone's cheating!
-
-</v-clicks>
-
-<!--
-NANO BANANA PRO PROMPT:
-"Flowchart in anime style showing DIQKD protocol. Cute chibi versions of Alice and Bob with their devices. Show entangled photons as connected hearts. Bell test as a checkpoint gate. Happy ending for successful key, dramatic failure scene for abort. Comic panel layout."
--->
+</div>
 
 ---
-layout: two-cols
+layout: image-right
+image: /images/challenges-progress.png
 ---
 
-# Challenges
+# Challenges & Progress
 
-<v-clicks>
+## Challenges
 
 - **Detection loophole**: Need ~83% efficiency
-- **Locality loophole**: Fast measurements
 - **Distance**: Entanglement is fragile
-- **Rate**: Very slow key generation
+- **Rate**: Slow key generation
 
-</v-clicks>
+## Recent Progress
 
-::right::
-
-# Recent Progress
-
-<v-clicks>
-
-- 2022: First loophole-free DIQKD demo
+- 2022: First loophole-free DIQKD
 - Improved detector efficiency
 - Quantum repeaters research
-- Satellite-based experiments
-
-</v-clicks>
-
-<!--
-NANO BANANA PRO PROMPT:
-"Split anime panel: Left side shows determined scientists facing obstacles represented as cute monster characters (detection monster, distance monster, speed monster). Right side shows triumphant breakthroughs with scientists celebrating, satellite in background. Shonen manga style."
--->
+- Satellite experiments
 
 ---
-layout: center
+layout: image-right
+image: /images/quantum-future.png
 ---
 
-# The Future of Secure Communication
+# The Future
 
-<div class="grid grid-cols-3 gap-8 mt-8">
+<div class="grid grid-cols-1 gap-4">
 
-<div class="text-center">
-<div class="text-4xl mb-2">🌐</div>
-<div class="font-bold">Quantum Internet</div>
-<div class="text-sm">Global quantum network</div>
+<div class="flex items-center gap-2">
+<div class="text-2xl">🌐</div>
+<div><strong>Quantum Internet</strong> - Global quantum network</div>
 </div>
 
-<div class="text-center">
-<div class="text-4xl mb-2">🛡️</div>
-<div class="font-bold">Unhackable Banks</div>
-<div class="text-sm">Physics-guaranteed security</div>
+<div class="flex items-center gap-2">
+<div class="text-2xl">🛡️</div>
+<div><strong>Unhackable Banks</strong> - Physics-guaranteed security</div>
 </div>
 
-<div class="text-center">
-<div class="text-4xl mb-2">🏛️</div>
-<div class="font-bold">Secure Governance</div>
-<div class="text-sm">Trustworthy elections</div>
+<div class="flex items-center gap-2">
+<div class="text-2xl">🏛️</div>
+<div><strong>Secure Governance</strong> - Trustworthy elections</div>
 </div>
 
 </div>
-
-<!--
-NANO BANANA PRO PROMPT:
-"Utopian anime cityscape of the future with quantum networks visualized as beautiful light streams connecting buildings. Mix of Hong Kong skyline elements with futuristic additions. Hopeful, bright color palette. Studio Ghibli style optimistic future."
--->
 
 ---
-layout: center
+layout: image
+image: /images/thank-you.png
 class: text-center
 ---
+
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="bg-black/50 p-8 rounded-xl">
 
 # Thank You!
 
 ## Questions?
 
-<div class="mt-8">
+<div class="mt-4 text-sm">
 
 🐦 @YourHandle | 📧 your@email.com
 
 </div>
 
-<!--
-NANO BANANA PRO PROMPT:
-"Anime style 'thank you' card featuring cute Alice and Bob characters waving goodbye, surrounded by floating quantum particles forming a heart shape. Hong Kong skyline in background at sunset. Warm, friendly, kawaii aesthetic."
--->
+</div>
+</div>
