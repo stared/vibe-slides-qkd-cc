@@ -4,110 +4,119 @@ import path from "path";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
-// Consistent style prefix for all images - based on the wonderful device-problem aesthetic
-const STYLE_PREFIX = `Anime illustration in consistent style: soft cel-shaded look, muted cyberpunk color palette (deep blues, purples, pinks, with neon accents), atmospheric lighting with subtle glow effects. Characters should have a semi-realistic anime proportion (not chibi), similar to modern anime films like "Your Name" or "Cyberpunk Edgerunners". Consistent character designs: Alice is a young woman with short blue hair and a white lab coat, Bob is a young man with brown messy hair and a casual jacket. Hong Kong cyberpunk aesthetic throughout. 16:9 aspect ratio, high quality.`;
+const STYLE = `Anime illustration, soft cel-shaded, cyberpunk palette (deep blues, purples, pinks, neon accents). Semi-realistic anime like "Your Name" or "Cyberpunk Edgerunners". Alice: short blue hair, white lab coat. Bob: brown messy hair, casual jacket. Hong Kong setting. Clean composition, no excessive glow or lens flares.`;
 
-const prompts = [
+// Images with their required aspect ratios
+const images = [
+  // 16:9 - Full background slides
   {
     name: "title",
-    prompt: `${STYLE_PREFIX} Title card scene: Alice and Bob standing on a Hong Kong rooftop at night, exchanging a glowing quantum key between them. Neon signs reflect off wet surfaces, Victoria Harbour visible in background. The quantum key appears as a shimmering stream of entangled photons connecting their hands. Cinematic composition, dramatic lighting.`
-  },
-  {
-    name: "quantum-lock",
-    prompt: `${STYLE_PREFIX} Alice explaining encryption concept, gesturing toward a large holographic padlock floating in the air. The padlock is surrounded by flowing data streams and encryption symbols. Modern Hong Kong tech lab setting with glass walls and city views. Educational but dramatic mood.`
-  },
-  {
-    name: "quantum-threat",
-    prompt: `${STYLE_PREFIX} Split composition: On the left, Alice confidently holds a glowing classical padlock. On the right, a massive quantum computer (visualized as an ominous machine with glowing qubits) looms threateningly, cracks forming in the padlock's light. Dramatic tension, the quantum threat approaching.`
-  },
-  {
-    name: "qkd-intro",
-    prompt: `${STYLE_PREFIX} Bob excitedly presenting at a holographic display showing quantum key distribution concept. He holds a glowing photon in his hand. The display shows physics equations and wave functions. Alice watches with interest in the background. Bright, hopeful mood - the solution has arrived.`
-  },
-  // SKIP device-problem - it's already wonderful!
-  {
-    name: "bb84-protocol",
-    prompt: `${STYLE_PREFIX} Alice and Bob on opposite sides of the frame, connected by a beautiful stream of polarized photons traveling between them. Alice sends photons with different polarization states (shown as small rotating symbols). Bob measures them with a detector device. Technical but artistic visualization of the BB84 protocol.`
-  },
-  {
-    name: "diqkd-hero",
-    prompt: `${STYLE_PREFIX} Heroic shot of Alice standing confidently, arms crossed, with a glowing shield of quantum entanglement protecting her. Around her float several quantum devices depicted as sleek but suspicious-looking black boxes with glowing indicators. She doesn't need to trust them - physics protects her. Empowering, triumphant mood.`
-  },
-  {
-    name: "bell-inequality",
-    prompt: `${STYLE_PREFIX} Educational visualization: Alice and Bob each hold one of a pair of entangled particles (shown as connected glowing orbs linked by a quantum thread). Between them, a translucent barrier labeled "S=2" is being shattered by their quantum correlation. Mathematical beauty meets dramatic action.`
-  },
-  {
-    name: "diqkd-protocol",
-    prompt: `${STYLE_PREFIX} Four-panel manga-style layout showing the DIQKD protocol: Panel 1: Alice and Bob receive entangled photon pairs. Panel 2: They make random measurements. Panel 3: Bell test checkpoint with S>2 glowing green. Panel 4: Secure key successfully extracted, both characters celebrating. Clean sequential art.`
-  },
-  {
-    name: "challenges-progress",
-    prompt: `${STYLE_PREFIX} Split scene with consistent colors (NOT black and white): Left side shows Alice and Bob facing challenges visualized as obstacles (detection efficiency meter, distance barrier, slow clock). Right side shows breakthroughs - improved detectors, a quantum satellite in orbit, celebration. Progress and hope.`
-  },
-  {
-    name: "quantum-future",
-    prompt: `${STYLE_PREFIX} Breathtaking view of future Hong Kong with quantum networks visualized as beautiful aurora-like light streams connecting all the skyscrapers. Victoria Harbour glows with quantum connections. Alice and Bob look out at this hopeful future from a high vantage point. Sunrise colors, optimistic and inspiring.`
+    ratio: "16:9",
+    prompt: `${STYLE} Wide cinematic shot: Alice and Bob on Hong Kong rooftop at night, exchanging glowing quantum particles between their hands. Neon signs, rain, Victoria Harbour in background. Dramatic cyberpunk atmosphere.`
   },
   {
     name: "thank-you",
-    prompt: `${STYLE_PREFIX} Warm closing scene: Alice and Bob wave goodbye to the viewer, standing together with Hong Kong's skyline behind them at golden hour. Quantum particles float around them forming a subtle heart shape. Friendly, warm, memorable ending. Thank you mood.`
+    ratio: "16:9",
+    prompt: `${STYLE} Wide shot: Alice and Bob waving at viewer, standing at Hong Kong waterfront promenade. Victoria Harbour and skyline behind them at golden hour sunset. Warm, friendly farewell scene.`
+  },
+
+  // 1:1 - image-right layout slides
+  {
+    name: "quantum-lock",
+    ratio: "1:1",
+    prompt: `${STYLE} Square composition: Alice in tech lab, gesturing at a holographic padlock icon. Hong Kong city visible through window. Professional, educational mood.`
+  },
+  {
+    name: "quantum-threat",
+    ratio: "1:1",
+    prompt: `${STYLE} Square composition: Alice looking concerned, holding a cracking padlock. Ominous quantum computer glow approaching from behind. Dramatic tension.`
+  },
+  {
+    name: "qkd-intro",
+    ratio: "1:1",
+    prompt: `${STYLE} Square composition: Bob excitedly presenting, holding a glowing photon particle. Holographic display with quantum equations behind him. Hopeful, solution-found mood.`
+  },
+  {
+    name: "bb84-protocol",
+    ratio: "1:1",
+    prompt: `${STYLE} Square composition: Alice on left sending photons, stream of colorful polarized light particles flowing to the right. Hong Kong rooftop setting at night.`
+  },
+  // SKIP device-problem - keeping the wonderful original
+  {
+    name: "diqkd-hero",
+    ratio: "1:1",
+    prompt: `${STYLE} Square composition: Alice standing confidently, arms crossed. Several black quantum device boxes float around her. She doesn't trust devices but physics protects her. Heroic pose, Hong Kong neon background.`
+  },
+  {
+    name: "bell-inequality",
+    ratio: "1:1",
+    prompt: `${STYLE} Square composition: Bob holding two connected glowing orbs (entangled particles) linked by quantum thread. A holographic "S > 2" sign nearby. Hong Kong rooftop night scene.`
+  },
+  {
+    name: "diqkd-protocol",
+    ratio: "1:1",
+    prompt: `${STYLE} Square 2x2 manga panel layout: Top-left: Alice and Bob receive entangled particles. Top-right: Random measurements on screens. Bottom-left: Bell test checkpoint glowing green. Bottom-right: Both celebrating with secure key icon. Clean panels.`
+  },
+  {
+    name: "challenges-progress",
+    ratio: "1:1",
+    prompt: `${STYLE} Square split composition: Top half shows Alice and Bob facing challenges (efficiency meter, distance icon, slow clock). Bottom half shows breakthroughs with quantum satellite in sky and celebration.`
+  },
+  {
+    name: "quantum-future",
+    ratio: "1:1",
+    prompt: `${STYLE} Square composition: Alice and Bob on balcony looking at futuristic Hong Kong skyline. Beautiful aurora-like quantum network streams connecting buildings. Sunrise, hopeful mood.`
   }
 ];
 
 const outputDir = "./public/images";
 
-async function generateImage(name, prompt) {
-  console.log(`Generating: ${name}...`);
+async function generateImage({ name, ratio, prompt }) {
+  console.log(`Generating ${name} (${ratio})...`);
 
   try {
     const response = await ai.models.generateContent({
       model: "gemini-3-pro-image-preview",
       contents: prompt,
       config: {
-        responseModalities: ["Text", "Image"],
-      },
+        responseModalities: ["TEXT", "IMAGE"],
+        imageConfig: {
+          aspectRatio: ratio
+        }
+      }
     });
 
     for (const part of response.candidates[0].content.parts) {
       if (part.inlineData) {
-        const imageData = part.inlineData.data;
-        const buffer = Buffer.from(imageData, "base64");
-        const filePath = path.join(outputDir, `${name}.png`);
-        fs.writeFileSync(filePath, buffer);
-        console.log(`  ✅ Saved: ${filePath}`);
+        const buffer = Buffer.from(part.inlineData.data, "base64");
+        fs.writeFileSync(path.join(outputDir, `${name}.png`), buffer);
+        console.log(`  ✅ Saved ${name}.png`);
         return true;
       }
     }
-    console.log(`  ⚠️ No image generated for ${name}`);
+    console.log(`  ⚠️ No image in response`);
     return false;
   } catch (error) {
-    console.error(`  ❌ Error generating ${name}:`, error.message);
+    console.error(`  ❌ Error:`, error.message);
     return false;
   }
 }
 
 async function main() {
-  if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir, { recursive: true });
+  console.log("=" .repeat(50));
+  console.log("Regenerating with CORRECT aspect ratios");
+  console.log("16:9 for full bg, 1:1 for image-right");
+  console.log("Skipping device-problem.png (keeping original)");
+  console.log("=".repeat(50) + "\n");
+
+  for (const img of images) {
+    await generateImage(img);
+    await new Promise(r => setTimeout(r, 2000));
   }
 
-  console.log("=".repeat(60));
-  console.log("Generating anime images with Nano Banana Pro");
-  console.log("Using consistent style prefix for visual coherence");
-  console.log("Skipping device-problem.png (already wonderful!)");
-  console.log("=".repeat(60));
-  console.log();
-
-  for (const { name, prompt } of prompts) {
-    await generateImage(name, prompt);
-    // Small delay to avoid rate limiting
-    await new Promise(resolve => setTimeout(resolve, 1500));
-  }
-
-  console.log("\n" + "=".repeat(60));
-  console.log("Done! Review the slides at http://localhost:3030");
-  console.log("=".repeat(60));
+  console.log("\n" + "=".repeat(50));
+  console.log("Done! Check http://localhost:3030");
+  console.log("=".repeat(50));
 }
 
 main();

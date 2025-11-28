@@ -92,15 +92,20 @@ image: /images/bb84-protocol.png
 
 # How QKD Works: BB84
 
-<div class="text-sm">
+<div class="text-sm bb84-table">
 
-| Alice | Alice's Bit | Bob | Result | Keep? |
-|-------|-------------|-----|--------|-------|
-| ➕ | 0 | ➕ | 0 | ✅ |
-| ✖️ | 1 | ➕ | ? | ❌ |
-| ✖️ | 0 | ✖️ | 0 | ✅ |
+| Alice | Bit | Bob | Result | Keep? |
+|:-----:|:---:|:---:|:------:|:-----:|
+| **+** | 0 | **+** | 0 | ✅ |
+| **×** | 1 | **+** | ? | ❌ |
+| **×** | 0 | **×** | 0 | ✅ |
 
 </div>
+
+<style>
+.bb84-table th { background: #4a1d7a; color: #f0f0f0; }
+.bb84-table td { color: #ffffff; font-weight: bold; }
+</style>
 
 <v-clicks>
 
@@ -204,16 +209,6 @@ image: /images/diqkd-protocol.png
 
 </v-clicks>
 
-<div class="mt-4 text-sm">
-
-```mermaid {scale: 0.6}
-graph TD
-    A[Entangled Pairs] --> B{Bell Test}
-    B -->|S > 2| C[Secure Key!]
-    B -->|S ≤ 2| D[Abort!]
-```
-
-</div>
 
 ---
 layout: image-right
