@@ -4,54 +4,54 @@ import path from "path";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
+// Consistent style prefix for all images - based on the wonderful device-problem aesthetic
+const STYLE_PREFIX = `Anime illustration in consistent style: soft cel-shaded look, muted cyberpunk color palette (deep blues, purples, pinks, with neon accents), atmospheric lighting with subtle glow effects. Characters should have a semi-realistic anime proportion (not chibi), similar to modern anime films like "Your Name" or "Cyberpunk Edgerunners". Consistent character designs: Alice is a young woman with short blue hair and a white lab coat, Bob is a young man with brown messy hair and a casual jacket. Hong Kong cyberpunk aesthetic throughout. 16:9 aspect ratio, high quality.`;
+
 const prompts = [
   {
     name: "title",
-    prompt: "Anime style illustration of two characters, Alice and Bob, exchanging a glowing quantum key through a futuristic Hong Kong skyline at night. Cyberpunk aesthetic with neon pink and blue colors. Studio Ghibli meets Ghost in the Shell. The key appears as a shimmering stream of photons between them. 16:9 aspect ratio, high quality."
+    prompt: `${STYLE_PREFIX} Title card scene: Alice and Bob standing on a Hong Kong rooftop at night, exchanging a glowing quantum key between them. Neon signs reflect off wet surfaces, Victoria Harbour visible in background. The quantum key appears as a shimmering stream of entangled photons connecting their hands. Cinematic composition, dramatic lighting.`
   },
   {
     name: "quantum-lock",
-    prompt: "Anime style digital padlock floating in cyberspace, surrounded by flowing data streams and binary code. Soft glowing blue and purple colors. Clean, minimalist Japanese illustration style. 16:9 aspect ratio."
+    prompt: `${STYLE_PREFIX} Alice explaining encryption concept, gesturing toward a large holographic padlock floating in the air. The padlock is surrounded by flowing data streams and encryption symbols. Modern Hong Kong tech lab setting with glass walls and city views. Educational but dramatic mood.`
   },
   {
     name: "quantum-threat",
-    prompt: "Anime illustration split in two panels: Left side shows a confident character with a traditional padlock, right side shows an ominous quantum computer as a giant robot monster breaking through. Dramatic lighting, manga panel style composition. 16:9 aspect ratio."
+    prompt: `${STYLE_PREFIX} Split composition: On the left, Alice confidently holds a glowing classical padlock. On the right, a massive quantum computer (visualized as an ominous machine with glowing qubits) looms threateningly, cracks forming in the padlock's light. Dramatic tension, the quantum threat approaching.`
   },
   {
     name: "qkd-intro",
-    prompt: "Cute anime scientist character excitedly presenting a glowing quantum particle. The particle emits soft pink and blue light. Background shows elegant quantum wave functions. Kawaii style but scientifically themed. 16:9 aspect ratio."
+    prompt: `${STYLE_PREFIX} Bob excitedly presenting at a holographic display showing quantum key distribution concept. He holds a glowing photon in his hand. The display shows physics equations and wave functions. Alice watches with interest in the background. Bright, hopeful mood - the solution has arrived.`
   },
+  // SKIP device-problem - it's already wonderful!
   {
     name: "bb84-protocol",
-    prompt: "Anime style Alice and Bob characters on opposite sides, connected by a stream of glowing photons. Alice has blue theme, Bob has pink theme. Show polarization symbols floating near photons. Clean infographic style with anime character design. 16:9 aspect ratio."
-  },
-  {
-    name: "device-problem",
-    prompt: "Dramatic anime scene of a suspicious-looking quantum device box with a tiny cute cartoon devil peeking inside it. The device appears normal on outside but has hidden malicious components visible. Dark thriller anime style with comedic undertone. 16:9 aspect ratio."
+    prompt: `${STYLE_PREFIX} Alice and Bob on opposite sides of the frame, connected by a beautiful stream of polarized photons traveling between them. Alice sends photons with different polarization states (shown as small rotating symbols). Bob measures them with a detector device. Technical but artistic visualization of the BB84 protocol.`
   },
   {
     name: "diqkd-hero",
-    prompt: "Triumphant anime hero character standing confidently with arms crossed, surrounded by floating quantum devices that appear as cute but suspicious robot characters. The hero is protected by a glowing energy shield. Inspirational anime poster style, dynamic pose. 16:9 aspect ratio."
+    prompt: `${STYLE_PREFIX} Heroic shot of Alice standing confidently, arms crossed, with a glowing shield of quantum entanglement protecting her. Around her float several quantum devices depicted as sleek but suspicious-looking black boxes with glowing indicators. She doesn't need to trust them - physics protects her. Empowering, triumphant mood.`
   },
   {
     name: "bell-inequality",
-    prompt: "Educational anime infographic showing quantum entanglement. Two entangled particles as cute connected twin characters holding hands across space. Show a magical barrier labeled '2' being broken. Bright, educational style like a science anime. 16:9 aspect ratio."
+    prompt: `${STYLE_PREFIX} Educational visualization: Alice and Bob each hold one of a pair of entangled particles (shown as connected glowing orbs linked by a quantum thread). Between them, a translucent barrier labeled "S=2" is being shattered by their quantum correlation. Mathematical beauty meets dramatic action.`
   },
   {
     name: "diqkd-protocol",
-    prompt: "Comic panel layout anime style showing DIQKD protocol. Cute chibi versions of Alice and Bob with their quantum devices. Show entangled photons as connected glowing hearts. A checkpoint gate in the middle. 4 panel manga layout. 16:9 aspect ratio."
+    prompt: `${STYLE_PREFIX} Four-panel manga-style layout showing the DIQKD protocol: Panel 1: Alice and Bob receive entangled photon pairs. Panel 2: They make random measurements. Panel 3: Bell test checkpoint with S>2 glowing green. Panel 4: Secure key successfully extracted, both characters celebrating. Clean sequential art.`
   },
   {
     name: "challenges-progress",
-    prompt: "Split anime panel: Left side shows determined scientists facing cute monster characters representing obstacles. Right side shows triumphant celebration with a satellite in starry background. Shonen manga style, inspiring. 16:9 aspect ratio."
+    prompt: `${STYLE_PREFIX} Split scene with consistent colors (NOT black and white): Left side shows Alice and Bob facing challenges visualized as obstacles (detection efficiency meter, distance barrier, slow clock). Right side shows breakthroughs - improved detectors, a quantum satellite in orbit, celebration. Progress and hope.`
   },
   {
     name: "quantum-future",
-    prompt: "Utopian anime cityscape of future Hong Kong with quantum networks visualized as beautiful aurora-like light streams connecting skyscrapers. Victoria Harbour visible. Hopeful sunset colors. Studio Ghibli style optimistic future. 16:9 aspect ratio."
+    prompt: `${STYLE_PREFIX} Breathtaking view of future Hong Kong with quantum networks visualized as beautiful aurora-like light streams connecting all the skyscrapers. Victoria Harbour glows with quantum connections. Alice and Bob look out at this hopeful future from a high vantage point. Sunrise colors, optimistic and inspiring.`
   },
   {
     name: "thank-you",
-    prompt: "Anime style thank you illustration featuring cute Alice and Bob characters waving, surrounded by floating quantum particles forming a heart shape. Hong Kong skyline silhouette in background at golden hour. Warm, friendly, kawaii aesthetic. 16:9 aspect ratio."
+    prompt: `${STYLE_PREFIX} Warm closing scene: Alice and Bob wave goodbye to the viewer, standing together with Hong Kong's skyline behind them at golden hour. Quantum particles float around them forming a subtle heart shape. Friendly, warm, memorable ending. Thank you mood.`
   }
 ];
 
@@ -75,14 +75,14 @@ async function generateImage(name, prompt) {
         const buffer = Buffer.from(imageData, "base64");
         const filePath = path.join(outputDir, `${name}.png`);
         fs.writeFileSync(filePath, buffer);
-        console.log(`  Saved: ${filePath}`);
+        console.log(`  ✅ Saved: ${filePath}`);
         return true;
       }
     }
-    console.log(`  No image generated for ${name}`);
+    console.log(`  ⚠️ No image generated for ${name}`);
     return false;
   } catch (error) {
-    console.error(`  Error generating ${name}:`, error.message);
+    console.error(`  ❌ Error generating ${name}:`, error.message);
     return false;
   }
 }
@@ -92,15 +92,22 @@ async function main() {
     fs.mkdirSync(outputDir, { recursive: true });
   }
 
-  console.log("Generating anime images with Nano Banana Pro...\n");
+  console.log("=".repeat(60));
+  console.log("Generating anime images with Nano Banana Pro");
+  console.log("Using consistent style prefix for visual coherence");
+  console.log("Skipping device-problem.png (already wonderful!)");
+  console.log("=".repeat(60));
+  console.log();
 
   for (const { name, prompt } of prompts) {
     await generateImage(name, prompt);
     // Small delay to avoid rate limiting
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, 1500));
   }
 
-  console.log("\nDone!");
+  console.log("\n" + "=".repeat(60));
+  console.log("Done! Review the slides at http://localhost:3030");
+  console.log("=".repeat(60));
 }
 
 main();
